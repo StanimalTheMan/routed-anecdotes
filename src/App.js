@@ -10,7 +10,7 @@ const Menu = ({ anecdotes, addNew }) => {
   const anecdote = match
     ? anecdotes.find((anecdote) => anecdote.id === match.params.id)
     : null;
-  console.log(match, anecdote);
+
   return (
     <>
       <div>
@@ -43,7 +43,6 @@ const Menu = ({ anecdotes, addNew }) => {
 };
 
 const Anecdote = ({ anecdote }) => {
-  console.log(anecdote);
   return (
     <>
       <h1>
