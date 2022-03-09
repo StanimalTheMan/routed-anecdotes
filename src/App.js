@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { Routes, Route, Link, useMatch, useNavigate } from "react-router-dom";
 
 const Menu = ({ anecdotes, addNew }) => {
+  // const navigate = useNavigate();
+
   const padding = {
     paddingRight: 5,
   };
 
-  const match = useRouteMatch("/anecdotes/:id");
+  const match = useMatch("/anecdotes/:id");
   const anecdote = match
     ? anecdotes.find((anecdote) => anecdote.id === match.params.id)
     : null;
@@ -24,20 +26,12 @@ const Menu = ({ anecdotes, addNew }) => {
           about
         </Link>
       </div>
-      <Switch>
-        <Route exact path="/">
-          <AnecdoteList anecdotes={anecdotes} />
-        </Route>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/create">
-          <CreateNew addNew={addNew} />
-        </Route>
-        <Route path="/anecdotes/:id">
-          <Anecdote anecdote={anecdote} />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route exact path="/" element={ <AnecdoteList anecdotes={anecdotes} />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route path="/anecdotes/:id" element={<Anecdote anecdote={anecdote} />} />
+      </Routes>
     </>
   );
 };
