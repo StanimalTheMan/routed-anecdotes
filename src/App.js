@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Routes, Route, Link, useMatch, useNavigate } from "react-router-dom";
 
 const Menu = ({ anecdotes, addNew }) => {
-  // const navigate = useNavigate();
-
   const padding = {
     paddingRight: 5,
   };
@@ -12,10 +10,16 @@ const Menu = ({ anecdotes, addNew }) => {
   const anecdote = match
     ? anecdotes.find((anecdote) => anecdote.id === match.params.id)
     : null;
+  const [addedNotif, setAddedNotif]  = useState();
+
+  const handleAddNotif = (notif) => {
+    setAddedNotif(notif);
+  }
 
   return (
     <>
       <div>
+        <p>{addedNotif}</p>
         <Link to="/" style={padding}>
           anecdotes
         </Link>
@@ -29,7 +33,7 @@ const Menu = ({ anecdotes, addNew }) => {
       <Routes>
         <Route exact path="/" element={ <AnecdoteList anecdotes={anecdotes} />} />
         <Route path="/about" element={<About />} />
-        <Route path="/create" element={<CreateNew addNew={addNew} />} />
+        <Route path="/create" element={<CreateNew addNew={addNew} updateNotif={handleAddNotif} />} />
         <Route path="/anecdotes/:id" element={<Anecdote anecdote={anecdote} />} />
       </Routes>
     </>
@@ -100,6 +104,8 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
+  const navigate = useNavigate();
+
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState("");
   const [info, setInfo] = useState("");
@@ -112,6 +118,8 @@ const CreateNew = (props) => {
       info,
       votes: 0,
     });
+    props.updateNotif(`a new anecdote ${content} created!`);
+    navigate('/');
   };
 
   return (
