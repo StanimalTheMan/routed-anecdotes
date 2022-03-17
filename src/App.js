@@ -10,10 +10,13 @@ const Menu = ({ anecdotes, addNew }) => {
   const anecdote = match
     ? anecdotes.find((anecdote) => anecdote.id === match.params.id)
     : null;
-  const [addedNotif, setAddedNotif]  = useState();
+  const [addedNotif, setAddedNotif]  = useState(null);
 
   const handleAddNotif = (notif) => {
     setAddedNotif(notif);
+    setTimeout(() => {
+      setAddedNotif(null);
+    }, 5000)
   }
 
   return (
