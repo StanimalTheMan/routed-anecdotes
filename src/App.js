@@ -114,6 +114,9 @@ const CreateNew = (props) => {
   const content = useField("content");
   const author = useField("author");
   const info = useField("author");
+  const {reset: contentReset, ...contentPropsNoReset} = content;
+  const {reset: authorReset, ...authorPropsNoReset} = author
+  const {reset, ...infoPropsNoReset} = info;
 
 
   const handleSubmit = (e) => {
@@ -135,29 +138,28 @@ const CreateNew = (props) => {
         <div>
           content
           <input
-            name={content.name}
-            value={content.value}
-            onChange={content.onChange}
+            {...contentPropsNoReset}
           />
         </div>
         <div>
           author
           <input
-            name={author.name}
-            value={author.value}
-            onChange={author.onChange}
+            {...authorPropsNoReset}
           />
         </div>
         <div>
           url for more info
           <input
-            name={info.name}
-            value={info.value}
-            onChange={info.onChange}
+            {...infoPropsNoReset}
           />
         </div>
         <button>create</button>
       </form>
+      <button onClick={() => {
+          content.reset();
+          author.reset();
+          info.reset();
+        }}>reset</button>
     </div>
   );
 };
